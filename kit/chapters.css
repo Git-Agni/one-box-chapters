@@ -1,0 +1,36 @@
+/* one-box-chapters base layout. Prefix everything per site (fh- on Handler) so it never
+   leaks into the rest of the site. Colors come from the site's own tokens. */
+
+/* Hero: copy left, live stage right on desktop; one centered column on phones. */
+.ob-hero { padding: 88px 20px 56px; }
+.ob-hero-grid { display: grid; gap: 40px; max-width: 1180px; margin: 0 auto; }
+.ob-hero-copy { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+.ob-hero-copy p { margin-left: auto; margin-right: auto; }
+@media (min-width: 1024px) {
+  .ob-hero { padding: 104px 24px 80px; }
+  .ob-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 56px; align-items: start; }
+  /* Copy sits a little below the top of the stage (Handler round 3). */
+  .ob-hero-copy { padding-top: 56px; align-items: flex-start; text-align: left; }
+  .ob-hero-copy p { margin-left: 0; }
+}
+
+/* The small H1 that says what the product is. */
+.ob-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+.ob-kicker h1 { font: inherit; margin: 0; }
+
+/* The line under the box: centered under the box, on every breakpoint. */
+.ob-under { text-align: center; font-size: 14px; opacity: 0.75; }
+
+/* Entrance: transform only, so the LCP element paints at once. */
+.ob-enter { animation: ob-rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+@keyframes ob-rise { from { transform: translateY(14px); } }
+
+/* Chapters: one screen each, painted lazily. */
+.ob-ch { position: relative; padding: 72px 20px; content-visibility: auto; contain-intrinsic-size: auto 900px; }
+@media (min-width: 768px) { .ob-ch { padding: 88px 24px; } }
+.ob-ch-inner { max-width: 1180px; margin: 0 auto; }
+@media (min-width: 1024px) { .ob-ch-inner { min-height: min(724px, calc(100svh - 176px)); display: grid; align-content: center; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-enter, .ob-anim, .ob-anim * { animation: none !important; transition: none !important; }
+}
